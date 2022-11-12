@@ -8,6 +8,10 @@
 
 **使用前应该查阅的相关文档或项目**
 
+*   [User Manual](https://github.com/mamoe/mirai/blob/dev/docs/UserManual.md)
+*   [Permission Command](https://github.com/mamoe/mirai/blob/dev/mirai-console/docs/BuiltInCommands.md#permissioncommand)
+*   [Chat Command](https://github.com/project-mirai/chat-command)
+
 **目前只实现了加群验证的功能**
 
 ## MCL 指令安装
@@ -19,8 +23,14 @@
 
 ### auth-join
 
-*   `/auth-join check [group] {types}`  
+*   `/auth-join check [group] {types}` 进群前检查  
     例如: `/auth-join check 123456 profile question`
+*   `/auth-join validator [group] {types}` 进群后验证  
+    例如: `/auth-join validator 123456 captcha`
+*   `/auth-join official [id]` 设置自动放行的QQ号  
+    例如: `/auth-join official 123456789`
+*   `/auth-join timeout [mills]` 问题回答等待时间  
+    例如: `/auth-join mills 180000`
 
 ## 配置 Lua 校验脚本
 
