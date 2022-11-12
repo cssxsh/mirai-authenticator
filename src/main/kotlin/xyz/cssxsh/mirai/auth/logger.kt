@@ -6,7 +6,7 @@ import xyz.cssxsh.mirai.admin.*
 internal val logger by lazy {
     try {
         MiraiAuthenticatorPlugin.logger
-    } catch (_: ExceptionInInitializerError) {
+    } catch (_: UninitializedPropertyAccessException) {
         MiraiLogger.Factory.create(MiraiAdministrator::class)
     }
 }

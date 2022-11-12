@@ -4,13 +4,18 @@ import net.mamoe.mirai.event.events.*
 import xyz.cssxsh.mirai.auth.*
 import xyz.cssxsh.mirai.spi.*
 
-public class MiraiAuthApprover : FriendApprover, GroupApprover, MemberApprover {
+/**
+ * SPI 接口
+ * @see ComparableService
+ */
+public class MiraiAuthApprover : MemberApprover {
+    // FriendApprover, GroupApprover,
     override val id: String = "mirai-authenticator"
     override val level: Int = 10
 
-    override suspend fun approve(event: NewFriendRequestEvent): ApproveResult = ApproveResult.Ignore
-
-    override suspend fun approve(event: BotInvitedJoinGroupRequestEvent): ApproveResult = ApproveResult.Ignore
+//    override suspend fun approve(event: NewFriendRequestEvent): ApproveResult = ApproveResult.Ignore
+//
+//    override suspend fun approve(event: BotInvitedJoinGroupRequestEvent): ApproveResult = ApproveResult.Ignore
 
     override suspend fun approve(event: MemberJoinRequestEvent): ApproveResult {
         return when (MiraiAuthenticator.auth(event)) {
@@ -21,9 +26,9 @@ public class MiraiAuthApprover : FriendApprover, GroupApprover, MemberApprover {
         }
     }
 
-    override suspend fun approve(event: FriendAddEvent): ApproveResult = ApproveResult.Ignore
-
-    override suspend fun approve(event: BotJoinGroupEvent): ApproveResult = ApproveResult.Ignore
+//    override suspend fun approve(event: FriendAddEvent): ApproveResult = ApproveResult.Ignore
+//
+//    override suspend fun approve(event: BotJoinGroupEvent): ApproveResult = ApproveResult.Ignore
 
     override suspend fun approve(event: MemberJoinEvent): ApproveResult {
         return when (MiraiAuthenticator.auth(event)) {
