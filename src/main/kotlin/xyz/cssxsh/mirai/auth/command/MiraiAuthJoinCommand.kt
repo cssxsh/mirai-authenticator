@@ -15,7 +15,7 @@ internal object MiraiAuthJoinCommand : CompositeCommand(
 ) {
 
     @SubCommand
-    @Description("加群前检查配置")
+    @Description("进群前检查配置")
     suspend fun CommandSender.check(group: Long, vararg types: String) {
         if (types.any { it !in MiraiChecker.providers }) {
             sendMessage("当前支持的类型 ${MiraiChecker.providers.keys}")
@@ -34,7 +34,7 @@ internal object MiraiAuthJoinCommand : CompositeCommand(
     }
 
     @SubCommand
-    @Description("加群后验证配置")
+    @Description("进群后验证配置")
     suspend fun CommandSender.validator(group: Long, vararg types: String) {
         if (types.all { it in MiraiValidator.providers }) {
             MiraiAuthJoinConfig.validators[group] = types.asList()
@@ -61,5 +61,16 @@ internal object MiraiAuthJoinCommand : CompositeCommand(
         }
         MiraiAuthJoinConfig.timeout = mills
         sendMessage("目前 等待时间 ${mills}ms")
+    }
+
+    @SubCommand
+    @Description("问题允许回答次数")
+    suspend fun CommandSender.count(value: Int) {
+        if (value < 0) {
+            sendMessage("至少 1 次")
+            return
+        }
+        MiraiAuthJoinConfig.count = value
+        sendMessage("目前 回答次数 $value 次")
     }
 }

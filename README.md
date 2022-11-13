@@ -25,12 +25,18 @@
 
 *   `/auth-join check [group] {types}` 进群前检查  
     例如: `/auth-join check 123456 profile question`
+
 *   `/auth-join validator [group] {types}` 进群后验证  
     例如: `/auth-join validator 123456 captcha`
+
 *   `/auth-join official [id]` 设置自动放行的QQ号  
     例如: `/auth-join official 123456789`
+
 *   `/auth-join timeout [mills]` 问题回答等待时间  
     例如: `/auth-join mills 180000`
+
+*   `/auth-join count [value]` 问题允许回答次数  
+    例如: `/auth-join count 5`
 
 ## 配置 Lua 校验脚本
 

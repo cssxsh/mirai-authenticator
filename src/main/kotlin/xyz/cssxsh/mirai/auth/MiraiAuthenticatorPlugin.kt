@@ -7,6 +7,7 @@ import net.mamoe.mirai.console.plugin.jvm.*
 import net.mamoe.mirai.event.*
 import xyz.cssxsh.mirai.admin.*
 import xyz.cssxsh.mirai.auth.command.*
+import xyz.cssxsh.mirai.auth.data.*
 import xyz.cssxsh.mirai.auth.validator.*
 import javax.script.*
 
@@ -23,6 +24,7 @@ internal object MiraiAuthenticatorPlugin : KotlinPlugin(
     }
 ) {
     override fun onEnable() {
+        MiraiAuthJoinConfig.reload()
         try {
             MiraiAdministrator
         } catch (_: NoClassDefFoundError) {

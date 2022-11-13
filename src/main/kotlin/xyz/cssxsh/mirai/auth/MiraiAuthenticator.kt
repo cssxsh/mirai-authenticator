@@ -31,6 +31,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
 
     @EventHandler(priority = EventPriority.HIGH)
     internal suspend fun MemberJoinRequestEvent.handle() {
+        if ((group?.botPermission ?: MemberPermission.MEMBER) < MemberPermission.ADMINISTRATOR) return
         when (auth(this)) {
             MiraiAuthStatus.PASS -> accept()
             MiraiAuthStatus.FAIL -> reject(blackList = false, message = "验证失败")
@@ -42,6 +43,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
 
     @EventHandler(priority = EventPriority.HIGH)
     internal suspend fun MemberJoinEvent.handle() {
+        if (group.botPermission < MemberPermission.ADMINISTRATOR) return
         when (auth(this)) {
             MiraiAuthStatus.PASS -> return
             MiraiAuthStatus.FAIL -> member.kick(block = false, message = "验证失败")
@@ -110,7 +112,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
         val validators = event.group.validators() ?: return MiraiAuthStatus.IGNORE
 
         for (validator in validators) {
-            var count = 3
+            var count = MiraiAuthJoinConfig.count
             while (count-- > 0) {
                 val question = try {
                     validator.question(event = event)
@@ -140,13 +142,13 @@ public object MiraiAuthenticator : SimpleListenerHost() {
                 val content = response.message.contentToString()
 
                 try {
-                    if (validator.auth(answer = content).not()) return MiraiAuthStatus.FAIL
+                    return if (validator.auth(answer = content)) MiraiAuthStatus.PASS else continue
                 } catch (cause: IllegalStateException) {
                     logger.warning({ "提交<验证答案>失败" }, cause)
                 }
             }
         }
 
-        return MiraiAuthStatus.PASS
+        return MiraiAuthStatus.FAIL
     }
 }

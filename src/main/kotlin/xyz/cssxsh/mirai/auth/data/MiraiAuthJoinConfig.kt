@@ -8,6 +8,10 @@ internal object MiraiAuthJoinConfig: AutoSavePluginConfig("join") {
     @ValueDescription("等待问题提交时间")
     var timeout: Long by value(30_000L)
 
+    @ValueName("count")
+    @ValueDescription("问题允许的回答次数")
+    var count: Int by value(3)
+
     @ValueName("checkers")
     @ValueDescription("检查内容配置")
     val checkers: MutableMap<Long, List<String>> by value()
