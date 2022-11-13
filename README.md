@@ -38,6 +38,9 @@
 *   `/auth-join count [value]` 问题允许回答次数  
     例如: `/auth-join count 5`
 
+*   `/auth-join tip [message]` 验证码的提示  
+    例如: `/auth-join tip 请输入图片验证码的内容(不区分大小写)`
+
 #### 效果
 
 进群后验证:  

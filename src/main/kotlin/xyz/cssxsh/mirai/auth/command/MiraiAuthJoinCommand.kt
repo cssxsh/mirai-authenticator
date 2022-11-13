@@ -73,4 +73,11 @@ internal object MiraiAuthJoinCommand : CompositeCommand(
         MiraiAuthJoinConfig.count = value
         sendMessage("目前 回答次数 $value 次")
     }
+
+    @SubCommand
+    @Description("验证码的提示")
+    suspend fun CommandSender.tip(message: String) {
+        MiraiAuthJoinConfig.tip = message
+        sendMessage("目前 验证码的提示 $message")
+    }
 }

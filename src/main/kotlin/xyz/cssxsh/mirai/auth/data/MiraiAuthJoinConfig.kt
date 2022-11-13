@@ -12,6 +12,10 @@ internal object MiraiAuthJoinConfig: AutoSavePluginConfig("join") {
     @ValueDescription("问题允许的回答次数")
     var count: Int by value(3)
 
+    @ValueName("tip")
+    @ValueDescription("验证码的提示")
+    var tip: String by value("请输入图片验证码的内容")
+
     @ValueName("checkers")
     @ValueDescription("检查内容配置")
     val checkers: MutableMap<Long, List<String>> by value()

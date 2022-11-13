@@ -15,6 +15,7 @@ import kotlinx.serialization.json.*
 import net.mamoe.mirai.event.events.*
 import net.mamoe.mirai.message.data.*
 import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
+import xyz.cssxsh.mirai.auth.data.*
 
 /**
  * 验证器，验证码实现
@@ -69,7 +70,7 @@ public class MiraiCaptchaValidator : MiraiValidator {
 
     override suspend fun question(event: MemberJoinEvent): Message {
         val bytes = getCaptchaImage()
-        return bytes.toExternalResource().use { event.group.uploadImage(it) } + "请输入图片验证码的内容"
+        return bytes.toExternalResource().use { event.group.uploadImage(it) } + MiraiAuthJoinConfig.tip
     }
 
     override suspend fun auth(answer: String): Boolean {
