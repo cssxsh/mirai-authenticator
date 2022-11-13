@@ -38,6 +38,12 @@
 *   `/auth-join count [value]` 问题允许回答次数  
     例如: `/auth-join count 5`
 
+#### 效果
+
+进群后验证:  
+![captcha](example/captcha/captcha.jpg)
+
+
 ## 配置 Lua 校验脚本
 
 自定义验证分别在以下文件夹中
