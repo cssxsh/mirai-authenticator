@@ -93,13 +93,14 @@ public object MiraiAuthenticator : SimpleListenerHost() {
 
         for (checker in checkers) {
             try {
-                if (checker.check(event = event)) return MiraiAuthStatus.PASS
+                if (checker.check(event = event).not()) return MiraiAuthStatus.FAIL
             } catch (cause: IllegalStateException) {
-                logger.warning({ "提交<验证答案>失败" }, cause)
+                logger.warning({ "检查<入群答案>失败" }, cause)
+                return MiraiAuthStatus.IGNORE
             }
         }
 
-        return MiraiAuthStatus.FAIL
+        return MiraiAuthStatus.PASS
     }
 
     /**
