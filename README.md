@@ -90,5 +90,5 @@ return fromProfile:getQLevel() > 4;
 
 例如:
 ```lua
-return answer == "114514";
+return answer == "114514" or answer == "......";
 ```
