@@ -16,7 +16,7 @@ internal object MiraiAuthenticatorPlugin : KotlinPlugin(
     JvmPluginDescription(
         id = "xyz.cssxsh.mirai.plugin.mirai-authenticator",
         name = "mirai-authenticator",
-        version = "1.0.0",
+        version = "1.0.1",
     ) {
         author("cssxsh")
 
