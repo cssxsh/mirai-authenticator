@@ -44,7 +44,7 @@
 #### 效果
 
 进群后验证:  
-![captcha](example/captcha/captcha.jpg)
+![captcha](example/captcha/screenshot.jpg)
 
 
 ## 配置 Lua 校验脚本
