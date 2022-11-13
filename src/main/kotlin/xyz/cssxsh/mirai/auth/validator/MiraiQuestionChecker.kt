@@ -22,13 +22,13 @@ public class MiraiQuestionChecker : MiraiChecker {
 
         val bindings = engine.createBindings()
         bindings["bot"] = event.bot
-        bindings["event_id"] = event.eventId
-        bindings["from_id"] = event.fromId
-        bindings["from_nick"] = event.fromNick
-        bindings["group_id"] = event.groupId
-        bindings["group_name"] = event.groupName
+        bindings["eventId"] = event.eventId
+        bindings["fromId"] = event.fromId
+        bindings["fromNick"] = event.fromNick
+        bindings["groupId"] = event.groupId
+        bindings["groupName"] = event.groupName
         bindings["message"] = event.message
-        bindings["invitor_id"] = event.invitorId
+        bindings["invitorId"] = event.invitorId
         bindings["question"] = question
         bindings["answer"] = answer
 

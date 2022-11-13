@@ -49,19 +49,19 @@
 `Global variable` (bindings) 支持的属性和方法有以下
 
 *   `bot` bot 对象
-*   `event_id` 事件id
-*   `group_id` 群ID
-*   `group_name` 群名
+*   `eventId` 事件id
+*   `groupId` 群ID
+*   `groupName` 群名
 *   `message` 请求消息
-*   `invitor_id` 邀请人
-*   `from_id` 请求者ID
-*   `from_nick` 请求者NICK
+*   `invitorId` 邀请人
+*   `fromId` 请求者ID
+*   `fromNick` 请求者NICK
 
 ### Profile 校验脚本
 
 对于 `Profile` 校验脚本, 还将支持
 
-*   `from_profile` 请求者profile
+*   `fromProfile` 请求者profile
     *   `getAge` 获取年龄
     *   `getQLevel` 获取QQ等级
     *   `getEmail` 获取右键
@@ -69,7 +69,7 @@
 
 例如:  
 ```lua
-return from_profile:getQLevel() > 4;
+return fromProfile:getQLevel() > 4;
 ```
 
 ### Question 校验脚本
