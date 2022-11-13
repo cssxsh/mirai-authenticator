@@ -24,9 +24,11 @@ internal object MiraiAuthJoinCommand : CompositeCommand(
         for (type in types) {
             val script = Path(System.getProperty("xyz.cssxsh.mirai.auth.validator.$type", type), "${group}.lua")
             if (script.isReadable()) continue
-
-            sendMessage("请先设置 $script")
-            return
+            when (type) {
+                "profile" -> script.writeText("""return fromProfile:getQLevel() > 4;""")
+                "question" -> script.writeText("""return answer == "114514";""")
+            }
+            sendMessage("之后，请编辑确认 $script")
         }
 
         MiraiAuthJoinConfig.checkers[group] = types.asList()

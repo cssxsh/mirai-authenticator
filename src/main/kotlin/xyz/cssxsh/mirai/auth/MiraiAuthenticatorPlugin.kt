@@ -16,11 +16,12 @@ internal object MiraiAuthenticatorPlugin : KotlinPlugin(
     JvmPluginDescription(
         id = "xyz.cssxsh.mirai.plugin.mirai-authenticator",
         name = "mirai-authenticator",
-        version = "1.0.1",
+        version = "1.0.2",
     ) {
         author("cssxsh")
 
         dependsOn("xyz.cssxsh.mirai.plugin.mirai-administrator", true)
+        dependsOn("xyz.cssxsh.mirai.plugin.mirai-script-plugin", true)
     }
 ) {
     override fun onEnable() {
