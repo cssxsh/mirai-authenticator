@@ -143,9 +143,15 @@ public object MiraiAuthenticator : SimpleListenerHost() {
                 val content = response.message.contentToString()
 
                 try {
-                    return if (validator.auth(answer = content)) MiraiAuthStatus.PASS else continue
+                    if (validator.auth(answer = content)) return MiraiAuthStatus.PASS
                 } catch (cause: IllegalStateException) {
                     logger.warning({ "提交<验证答案>失败" }, cause)
+                    continue
+                }
+                try {
+                    event.group.sendMessage(message = At(event.member) + "验证失败")
+                } catch (cause: IllegalStateException) {
+                    logger.warning({ "发送<验证失败>失败" }, cause)
                 }
             }
         }

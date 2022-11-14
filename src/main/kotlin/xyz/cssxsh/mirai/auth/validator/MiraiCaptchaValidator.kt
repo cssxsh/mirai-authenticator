@@ -20,7 +20,8 @@ import xyz.cssxsh.mirai.auth.data.*
 /**
  * 验证器，验证码实现
  */
-public class MiraiCaptchaValidator : MiraiValidator {
+@PublishedApi
+internal class MiraiCaptchaValidator : MiraiValidator {
     private val http: HttpClient = HttpClient(OkHttp) {
         BrowserUserAgent()
         ContentEncoding()

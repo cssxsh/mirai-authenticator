@@ -4,7 +4,11 @@ import net.mamoe.mirai.event.events.*
 import javax.script.*
 import kotlin.io.path.*
 
-public class MiraiQuestionChecker : MiraiChecker {
+/**
+ * 校验加群问题
+ */
+@PublishedApi
+internal class MiraiQuestionChecker : MiraiChecker {
     private val regex = """(?:问题|答案)：(.+)""".toRegex()
     override suspend fun check(event: MemberJoinRequestEvent): Boolean {
         val match = regex.find(event.message) ?: return true

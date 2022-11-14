@@ -5,7 +5,11 @@ import net.mamoe.mirai.event.events.*
 import javax.script.*
 import kotlin.io.path.*
 
-public class MiraiProfileChecker : MiraiChecker {
+/**
+ * 校验简介信息
+ */
+@PublishedApi
+internal class MiraiProfileChecker : MiraiChecker {
     override suspend fun check(event: MemberJoinRequestEvent): Boolean {
         val folder = Path(System.getProperty("xyz.cssxsh.mirai.auth.validator.profile", "profile"))
         val script = folder.listDirectoryEntries().firstOrNull { it.name.startsWith("${event.groupId}.") }
