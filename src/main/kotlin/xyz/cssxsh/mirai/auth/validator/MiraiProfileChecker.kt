@@ -2,6 +2,7 @@ package xyz.cssxsh.mirai.auth.validator
 
 import net.mamoe.mirai.*
 import net.mamoe.mirai.event.events.*
+import net.mamoe.mirai.utils.*
 import javax.script.*
 import kotlin.io.path.*
 
@@ -10,6 +11,8 @@ import kotlin.io.path.*
  */
 @PublishedApi
 internal class MiraiProfileChecker : MiraiChecker {
+    private val logger: MiraiLogger = MiraiLogger.Factory.create(this::class)
+
     override suspend fun check(event: MemberJoinRequestEvent): Boolean {
         val folder = Path(System.getProperty("xyz.cssxsh.mirai.auth.validator.profile", "profile"))
         val script = folder.listDirectoryEntries().firstOrNull { it.name.startsWith("${event.groupId}.") }
@@ -27,6 +30,7 @@ internal class MiraiProfileChecker : MiraiChecker {
 
         val bindings = engine.createBindings()
         bindings["bot"] = event.bot
+        bindings["logger"] = logger
         bindings["eventId"] = event.eventId
         bindings["fromId"] = event.fromId
         bindings["fromNick"] = event.fromNick

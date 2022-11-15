@@ -1,6 +1,7 @@
 package xyz.cssxsh.mirai.auth.validator
 
 import net.mamoe.mirai.event.events.*
+import net.mamoe.mirai.utils.*
 import javax.script.*
 import kotlin.io.path.*
 
@@ -9,7 +10,9 @@ import kotlin.io.path.*
  */
 @PublishedApi
 internal class MiraiQuestionChecker : MiraiChecker {
+    private val logger: MiraiLogger = MiraiLogger.Factory.create(this::class)
     private val regex = """(?:问题|答案)：(.+)""".toRegex()
+
     override suspend fun check(event: MemberJoinRequestEvent): Boolean {
         val match = regex.find(event.message) ?: return true
         val question = match.groupValues[1]
@@ -35,6 +38,7 @@ internal class MiraiQuestionChecker : MiraiChecker {
         bindings["invitorId"] = event.invitorId
         bindings["question"] = question
         bindings["answer"] = answer
+        bindings["logger"] = logger
 
         val result = try {
             (engine.eval(script.readText(), bindings) as org.luaj.vm2.LuaValue)

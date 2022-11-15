@@ -46,10 +46,14 @@ internal object MiraiAuthenticatorPlugin : KotlinPlugin(
         }
 
         MiraiAuthJoinCommand.register()
+        MiraiAuthCaptchaCommand.register()
+        MiraiAuthCheckCommand.register()
     }
 
     override fun onDisable() {
-        MiraiAuthenticator.cancel()
         MiraiAuthJoinCommand.unregister()
+        MiraiAuthCaptchaCommand.unregister()
+        MiraiAuthCheckCommand.unregister()
+        MiraiAuthenticator.cancel()
     }
 }
