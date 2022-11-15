@@ -32,7 +32,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
     @EventHandler(priority = EventPriority.HIGH)
     internal suspend fun MemberJoinRequestEvent.handle() {
         if ((group?.botPermission ?: MemberPermission.MEMBER) < MemberPermission.ADMINISTRATOR) return
-        when (auth(this)) {
+        when (auth(event = this)) {
             MiraiAuthStatus.PASS -> accept()
             MiraiAuthStatus.FAIL -> reject(blackList = false, message = "验证失败")
             MiraiAuthStatus.BLACK -> reject(blackList = true, message = "验证失败")
@@ -44,7 +44,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
     @EventHandler(priority = EventPriority.HIGH)
     internal suspend fun MemberJoinEvent.handle() {
         if (group.botPermission < MemberPermission.ADMINISTRATOR) return
-        when (auth(this)) {
+        when (auth(event = this)) {
             MiraiAuthStatus.PASS -> return
             MiraiAuthStatus.FAIL -> member.kick(block = false, message = "验证失败")
             MiraiAuthStatus.BLACK -> member.kick(block = true, message = "验证失败")

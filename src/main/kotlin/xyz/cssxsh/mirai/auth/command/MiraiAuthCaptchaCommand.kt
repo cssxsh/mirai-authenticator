@@ -21,7 +21,7 @@ internal object MiraiAuthCaptchaCommand : SimpleCommand(
         val image = validator.getCaptchaImage().toExternalResource().use { resource ->
             subject.uploadImage(resource)
         }
-        sendMessage(image + MiraiAuthJoinConfig.tip)
+        sendMessage(message = image + MiraiAuthJoinConfig.tip)
         val next = subject.bot.eventChannel.nextEvent<MessageEvent>(priority = EventPriority.HIGH, intercept = true) {
             it.sender == user
         }

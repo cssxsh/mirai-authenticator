@@ -23,6 +23,9 @@
 
 ### auth-join
 
+配置验证条件, 目前 check 中 可选的 type 有 `profile`, `question`  
+配置验证条件, 目前 validator 中 可选的 type 有 `captcha`
+
 *   `/auth-join check [group] {types}` 进群前检查  
     例如: `/auth-join check 123456 profile question`
 
@@ -41,11 +44,31 @@
 *   `/auth-join tip [message]` 验证码的提示  
     例如: `/auth-join tip 请输入图片验证码的内容(不区分大小写)`
 
+*   `/auth-join place [group]` 加群请求失败交由管理员处理  
+    例如: `/auth-join place 123456`
+
+### auth-captcha
+
+测试验证码功能
+
+*   `/auth-captcha` 会发送一张验证码并接受回答，以供测试  
+
+### auth-check
+
+测试验证码功能
+
+*   `/auth-check question [group] [question] [answer]` 测试群的 question 验证脚本  
+    `group` 是群号, `question` 是问题, `answer` 是答案  
+    例如: `/auth-check question 123456 天王盖地虎 宝塔镇河妖`  
+
+*   `/auth-check profile [group] [target]` 测试群的 profile 验证脚本  
+    `group` 是群号, `target` 是被测试的qq号  
+    例如: `/auth-check profile 123456 789566`
+
 #### 效果
 
 进群后验证:  
 ![captcha](example/captcha/screenshot.jpg)
-
 
 ## 配置 Lua 校验脚本
 
