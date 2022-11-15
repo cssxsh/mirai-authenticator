@@ -1,5 +1,6 @@
 package xyz.cssxsh.mirai.auth.command
 
+import net.mamoe.mirai.*
 import net.mamoe.mirai.console.command.*
 import net.mamoe.mirai.event.*
 import net.mamoe.mirai.event.events.*
@@ -48,12 +49,13 @@ internal object MiraiAuthCheckCommand : CompositeCommand(
             eventId = Random.Default.nextLong(),
             message = "",
             fromId = target,
-            fromNick = "user.nick",
+            fromNick = "",
             groupId = group,
             groupName = "",
             invitorId = user.id
         )
 
+        sendMessage("${target}-${Mirai.queryProfile(bot, target)}")
         val checker = MiraiProfileChecker()
         val result = checker.check(event = request)
 

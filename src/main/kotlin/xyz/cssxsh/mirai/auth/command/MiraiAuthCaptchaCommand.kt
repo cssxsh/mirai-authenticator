@@ -30,8 +30,6 @@ internal object MiraiAuthCaptchaCommand : SimpleCommand(
 
         val result = validator.verifyCaptcha(code = answer)
 
-        MiraiAuthenticatorPlugin.logger.info("captcha result, code: ${result.code}, message: ${result.message}")
-
-        sendMessage(message = "验证结果: ${result.code == -102}")
+        sendMessage(message = "验证结果: ${result.code != -102}")
     }
 }
