@@ -82,4 +82,15 @@ internal object MiraiAuthJoinCommand : CompositeCommand(
         MiraiAuthJoinConfig.tip = message
         sendMessage("目前 验证码的提示 $message")
     }
+
+    @SubCommand
+    @Description("加群请求失败交由管理员处理")
+    suspend fun CommandSender.place(group: Long) {
+        if (MiraiAuthJoinConfig.place.add(group)) {
+            sendMessage("加群请求将失败交由管理员处理")
+        } else {
+            MiraiAuthJoinConfig.place.remove(group)
+            sendMessage("取消加群请求失败交由管理员处理")
+        }
+    }
 }

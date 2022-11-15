@@ -16,6 +16,10 @@ internal object MiraiAuthJoinConfig: AutoSavePluginConfig("join") {
     @ValueDescription("验证码的提示")
     var tip: String by value("请输入图片验证码的内容")
 
+    @ValueName("place")
+    @ValueDescription("加群请求将失败交由管理员处理")
+    val place: MutableSet<Long> by value()
+
     @ValueName("checkers")
     @ValueDescription("检查内容配置")
     val checkers: MutableMap<Long, List<String>> by value()
