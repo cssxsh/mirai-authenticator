@@ -27,6 +27,7 @@ internal object MiraiAuthJoinCommand : CompositeCommand(
             when (type) {
                 "profile" -> script.writeText("""return fromProfile:getQLevel() > 4;""")
                 "question" -> script.writeText("""return answer == "114514";""")
+                "bilibili" -> script.writeText("""return medal:getTargetId() == 3 and medal:getLevel() >= 20;""")
             }
             sendMessage("之后，请编辑确认 $script")
         }

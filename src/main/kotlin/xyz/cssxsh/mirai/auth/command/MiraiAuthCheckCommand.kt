@@ -10,6 +10,7 @@ import xyz.cssxsh.mirai.auth.validator.*
 import kotlin.random.*
 
 @PublishedApi
+@OptIn(MiraiInternalApi::class)
 internal object MiraiAuthCheckCommand : CompositeCommand(
     owner = MiraiAuthenticatorPlugin,
     primaryName = "auth-check",
@@ -19,7 +20,6 @@ internal object MiraiAuthCheckCommand : CompositeCommand(
     @SubCommand
     @Description("测试 question 校验器")
     suspend fun UserCommandSender.question(group: Long, question: String, answer: String) {
-        @OptIn(MiraiInternalApi::class)
         val request = MemberJoinRequestEvent(
             bot = bot,
             eventId = Random.Default.nextLong(),
@@ -43,7 +43,6 @@ internal object MiraiAuthCheckCommand : CompositeCommand(
     @SubCommand
     @Description("测试 profile 校验器")
     suspend fun UserCommandSender.profile(group: Long, target: Long) {
-        @OptIn(MiraiInternalApi::class)
         val request = MemberJoinRequestEvent(
             bot = bot,
             eventId = Random.Default.nextLong(),
@@ -57,6 +56,29 @@ internal object MiraiAuthCheckCommand : CompositeCommand(
 
         sendMessage("${target}-${Mirai.queryProfile(bot, target)}")
         val checker = MiraiProfileChecker()
+        val result = checker.check(event = request)
+
+        sendMessage(message = "验证结果: $result")
+    }
+
+    @SubCommand
+    @Description("测试 bilibili 校验器")
+    suspend fun UserCommandSender.bilibili(group: Long, uid: Long) {
+        val request = MemberJoinRequestEvent(
+            bot = bot,
+            eventId = Random.Default.nextLong(),
+            message = """
+                问题：请输入你的UID, (注意挂上舰长粉丝牌)
+                答案：$uid
+            """.trimIndent(),
+            fromId = 0,
+            fromNick = "",
+            groupId = group,
+            groupName = "",
+            invitorId = user.id
+        )
+
+        val checker = MiraiGuardChecker()
         val result = checker.check(event = request)
 
         sendMessage(message = "验证结果: $result")

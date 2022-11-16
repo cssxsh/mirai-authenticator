@@ -10,11 +10,10 @@ import kotlin.io.path.*
  */
 @PublishedApi
 internal class MiraiQuestionChecker : MiraiChecker {
-    private val logger: MiraiLogger = MiraiLogger.Factory.create(this::class)
-    private val regex = """(?:问题|答案)：(.+)""".toRegex()
+    override val logger: MiraiLogger = MiraiLogger.Factory.create(this::class)
 
     override suspend fun check(event: MemberJoinRequestEvent): Boolean {
-        val match = regex.find(event.message) ?: return true
+        val match = MiraiChecker.QA.find(event.message) ?: return true
         val question = match.groupValues[1]
         val answer = match.next()?.groupValues?.get(1) ?: return false
 
@@ -28,17 +27,8 @@ internal class MiraiQuestionChecker : MiraiChecker {
             ?: throw IllegalStateException("获取 ${script.extension} 脚本引擎失败")
 
         val bindings = engine.createBindings()
-        bindings["bot"] = event.bot
-        bindings["eventId"] = event.eventId
-        bindings["fromId"] = event.fromId
-        bindings["fromNick"] = event.fromNick
-        bindings["groupId"] = event.groupId
-        bindings["groupName"] = event.groupName
-        bindings["message"] = event.message
-        bindings["invitorId"] = event.invitorId
         bindings["question"] = question
         bindings["answer"] = answer
-        bindings["logger"] = logger
 
         val result = try {
             (engine.eval(script.readText(), bindings) as org.luaj.vm2.LuaValue)

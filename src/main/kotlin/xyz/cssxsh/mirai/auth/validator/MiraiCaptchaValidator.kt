@@ -8,7 +8,6 @@ import io.ktor.client.plugins.compression.*
 import io.ktor.client.plugins.cookies.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.utils.io.charsets.*
 import kotlinx.serialization.json.*
@@ -33,6 +32,7 @@ internal class MiraiCaptchaValidator : MiraiValidator {
         }
     }
 
+    @PublishedApi
     internal suspend fun getCaptchaImage(): ByteArray {
         val statement = http.prepareGet("https://mail.sina.com.cn/cgi-bin/imgcode.php") {
             header(HttpHeaders.Referrer, "https://mail.sina.com.cn/register/regmail.php")
@@ -46,6 +46,7 @@ internal class MiraiCaptchaValidator : MiraiValidator {
         }
     }
 
+    @PublishedApi
     internal suspend fun verifyCaptcha(code: String): SinaVerifyResult {
         val statement = http.prepareForm("https://mail.sina.com.cn/cgi-bin/RegPhoneCode.php", Parameters.build {
             append("phonenumber", "15874523695")
@@ -56,10 +57,8 @@ internal class MiraiCaptchaValidator : MiraiValidator {
             header(HttpHeaders.Origin, "https://mail.sina.com.cn")
         }
         return statement.execute { response ->
-            val text = response.bodyAsText()
-            if (response.status != HttpStatusCode.OK) {
-                throw ResponseException(response, text)
-            }
+            val text = response.body<String>()
+            if (response.status != HttpStatusCode.OK) throw ResponseException(response, text)
             try {
                 Json.decodeFromString(SinaVerifyResult.serializer(), text)
             } catch (cause: Exception) {

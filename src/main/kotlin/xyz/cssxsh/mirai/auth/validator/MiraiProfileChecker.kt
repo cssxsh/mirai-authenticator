@@ -11,7 +11,7 @@ import kotlin.io.path.*
  */
 @PublishedApi
 internal class MiraiProfileChecker : MiraiChecker {
-    private val logger: MiraiLogger = MiraiLogger.Factory.create(this::class)
+    override val logger: MiraiLogger = MiraiLogger.Factory.create(this::class)
 
     override suspend fun check(event: MemberJoinRequestEvent): Boolean {
         val folder = Path(System.getProperty("xyz.cssxsh.mirai.auth.validator.profile", "profile"))
@@ -28,17 +28,8 @@ internal class MiraiProfileChecker : MiraiChecker {
             throw IllegalStateException("查询 ${event.fromId} 信息失败", cause)
         }
 
-        val bindings = engine.createBindings()
-        bindings["bot"] = event.bot
-        bindings["logger"] = logger
-        bindings["eventId"] = event.eventId
-        bindings["fromId"] = event.fromId
-        bindings["fromNick"] = event.fromNick
+        val bindings = engine.createBindings().apply(event = event)
         bindings["fromProfile"] = profile
-        bindings["groupId"] = event.groupId
-        bindings["groupName"] = event.groupName
-        bindings["message"] = event.message
-        bindings["invitorId"] = event.invitorId
 
         val result = try {
             (engine.eval(script.readText(), bindings) as org.luaj.vm2.LuaValue)
