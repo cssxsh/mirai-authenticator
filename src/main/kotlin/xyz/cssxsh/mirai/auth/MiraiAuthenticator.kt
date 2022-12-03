@@ -86,6 +86,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
     /**
      * 加群前验证
      * @param event 被验证成员的申请事件
+     * @see MiraiChecker
      */
     public suspend fun auth(event: MemberJoinRequestEvent): MiraiAuthStatus {
         val group = event.group ?: return MiraiAuthStatus.IGNORE
@@ -134,7 +135,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
                     logger.warning({ "发送<验证问题>失败" }, cause)
                     continue
                 }
-                val response = withTimeoutOrNull(MiraiAuthJoinConfig.timeout) {
+                val response = withTimeoutOrNull(timeMillis = MiraiAuthJoinConfig.timeout) {
                     globalEventChannel().nextEvent<GroupMessageEvent>(priority = EventPriority.HIGH, intercept = true) {
                         it.group == event.group && it.sender == event.member
                     }
@@ -149,17 +150,20 @@ public object MiraiAuthenticator : SimpleListenerHost() {
 
                 val content = response.message.contentToString()
 
-                try {
-                    if (validator.auth(answer = content)) return MiraiAuthStatus.PASS
+                val result = try {
+                    validator.auth(answer = content)
                 } catch (cause: IllegalStateException) {
                     logger.warning({ "提交<验证答案>失败" }, cause)
                     continue
                 }
+
                 try {
-                    event.group.sendMessage(message = At(event.member) + "验证失败")
+                    event.group.sendMessage(message = At(event.member) + if (result) "验证成功" else "验证失败")
                 } catch (cause: IllegalStateException) {
-                    logger.warning({ "发送<验证失败>失败" }, cause)
+                    logger.warning({ "发送<验证结果>失败" }, cause)
                 }
+
+                if (result) return MiraiAuthStatus.PASS
             }
         }
 
