@@ -9,6 +9,8 @@ internal data class BiliBiliUserInfo(
     val birthday: String = "",
     @SerialName("coins")
     val coins: Int = 0,
+    @SerialName("contract")
+    val contract: JsonElement = JsonNull,
     @SerialName("elec")
     val elec: JsonElement = JsonNull,
     @SerialName("face")
@@ -32,7 +34,7 @@ internal data class BiliBiliUserInfo(
     @SerialName("is_senior_member")
     val isSeniorMember: Int = 0,
     @SerialName("jointime")
-    val jointime: Int = 0,
+    val jointime: Long = 0,
     @SerialName("level")
     val level: Int = 0,
     @SerialName("live_room")
@@ -40,7 +42,7 @@ internal data class BiliBiliUserInfo(
     @SerialName("mcn_info")
     val mcnInfo: JsonElement = JsonNull,
     @SerialName("mid")
-    val mid: Int = 0,
+    val mid: Long = 0,
     @SerialName("moral")
     val moral: Int = 0,
     @SerialName("name")
