@@ -2,7 +2,7 @@ name: MiraiAuthenticator Test
 on: [ push, pull_request ]
 
 jobs:
-  cache:
+  check:
     runs-on: ubuntu-latest
     steps:
 

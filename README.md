@@ -5,6 +5,7 @@
 [![Release](https://img.shields.io/github/v/release/cssxsh/mirai-authenticator)](https://github.com/cssxsh/mirai-authenticator/releases)
 [![Downloads](https://img.shields.io/github/downloads/cssxsh/mirai-authenticator/total)](https://repo1.maven.org/maven2/xyz/cssxsh/mirai/mirai-authenticator/)
 [![maven-central](https://img.shields.io/maven-central/v/xyz.cssxsh.mirai/mirai-authenticator)](https://search.maven.org/artifact/xyz.cssxsh.mirai/mirai-authenticator)
+[![MiraiAuthenticator Test](https://github.com/cssxsh/mirai-authenticator/actions/workflows/test.yml/badge.svg)](https://github.com/cssxsh/mirai-authenticator/actions/workflows/test.yml)
 
 **使用前应该查阅的相关文档或项目**
 
@@ -23,7 +24,7 @@
 
 ### auth-join
 
-配置验证条件, 目前 check 中 可选的 type 有 `profile`, `question`  
+配置验证条件, 目前 check 中 可选的 type 有 `profile`, `question`, `bilibili`  
 配置验证条件, 目前 validator 中 可选的 type 有 `captcha`
 
 *   `/auth-join check [group] {types}` 进群前检查  
@@ -65,6 +66,10 @@
     `group` 是群号, `target` 是被测试的qq号  
     例如: `/auth-check profile 123456 789566`
 
+*   `/auth-check bilibili [group] [uid]` 测试群的 bilibili 验证脚本  
+    `group` 是群号, `uid` 是入群提交的 uid  
+    例如: `/auth-check bilibili 123456 789566`
+
 #### 效果
 
 进群后验证:  
@@ -74,7 +79,8 @@
 
 自定义验证分别在以下文件夹中
 *   `data/xyz.cssxsh.mirai.plugin.mirai-authenticator/profile`  
-*   `data/xyz.cssxsh.mirai.plugin.mirai-authenticator/question`  
+*   `data/xyz.cssxsh.mirai.plugin.mirai-authenticator/question`
+*   `data/xyz.cssxsh.mirai.plugin.mirai-authenticator/bilibili`
 
 脚本文件名对应群号, 例如 `123456.lua`
 
@@ -91,7 +97,8 @@
 
 ### Profile 校验脚本
 
-对于 `Profile` 校验脚本, 还将支持
+`Profile` 校验脚本主要用于校验用户的 `Profile` 信息  
+所以对于 `Profile` 校验脚本, 将支持
 
 *   `fromProfile` 请求者profile
     *   `getAge` 获取年龄
@@ -99,19 +106,36 @@
     *   `getEmail` 获取右键
     *   `getNickname` 获取昵称
 
-例如:  
+例如，检查申请入群者的QQ等级是否大于4:  
 ```lua
 return fromProfile:getQLevel() > 4;
 ```
 
 ### Question 校验脚本
 
-对于 `Question` 校验脚本, 还将支持
+`Question` 校验脚本主要用于校验用户提交的加群问题答案  
+所以对于 `Question` 校验脚本, 将支持
 
 *   `question` 问题
 *   `answer` 回答
 
-例如:
+例如，检查答案是否满足要求:
 ```lua
 return answer == "114514" or answer == "......";
+```
+
+### BiliBili 校验脚本
+
+`BiliBili` 校验脚本主要用于校验用户提交的 `UID` 当前配置的粉丝牌详情      
+对于 `BiliBili` 校验脚本, 将支持
+
+*   `medal` 粉丝牌详情
+    *   `getTargetId` 获取主播UID
+    *   `getScore` 获取积分
+    *   `getLevel` 获取等级
+    *   `getGuardLevel` 获取舰长类型 (0 是非舰长)
+
+例如, 检查是否佩戴了 [哔哩哔哩音悦台#11153765](https://space.bilibili.com/11153765) 的粉丝牌，且为舰长 (等级大等于20) :
+```lua
+return medal:getTargetId() == 11153765 and medal:getLevel() >= 20;
 ```
