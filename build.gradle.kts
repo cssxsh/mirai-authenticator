@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.serialization") version "1.7.22"
 
-    id("net.mamoe.mirai-console") version "2.13.1"
+    id("net.mamoe.mirai-console") version "2.13.2"
     id("me.him188.maven-central-publish") version "1.0.0-dev-3"
 }
 
@@ -32,7 +32,7 @@ dependencies {
     testImplementation("org.luaj:luaj-jse:3.0.1")
     testImplementation("org.jline:jline:3.21.0")
     //
-    implementation(platform("net.mamoe:mirai-bom:2.13.1"))
+    implementation(platform("net.mamoe:mirai-bom:2.13.2"))
     compileOnly("net.mamoe:mirai-console-compiler-common")
     testImplementation("net.mamoe:mirai-core-mock")
     testImplementation("net.mamoe:mirai-logging-slf4j")
