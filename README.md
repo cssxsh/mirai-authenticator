@@ -139,3 +139,7 @@ return answer == "114514" or answer == "......";
 ```lua
 return medal:getTargetId() == 11153765 and medal:getLevel() >= 20;
 ```
+
+## [爱发电](https://afdian.net/@cssxsh)
+
+![afdian](example/sponsor/afdian.jpg)
