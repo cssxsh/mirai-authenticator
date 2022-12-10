@@ -96,7 +96,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
             try {
                 if (checker.check(event = event).not()) {
                     return if (group.id in MiraiAuthJoinConfig.place) {
-                        group.sendMessage(message = "<${event.fromNick}#${event.fromId}>加群请求检查失败, 请管理员处理")
+                        group.sendMessage(message = "${event.fromNick}(${event.fromId}) 加群请求检查失败, 请管理员处理")
                         MiraiAuthStatus.IGNORE
                     } else {
                         MiraiAuthStatus.FAIL
