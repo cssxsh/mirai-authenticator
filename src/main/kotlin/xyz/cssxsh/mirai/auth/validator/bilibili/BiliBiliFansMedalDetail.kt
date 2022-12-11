@@ -1,7 +1,8 @@
-package xyz.cssxsh.mirai.auth.validator
+package xyz.cssxsh.mirai.auth.validator.bilibili
 
 import kotlinx.serialization.*
 
+@PublishedApi
 @Serializable
 internal data class BiliBiliFansMedalDetail(
     @SerialName("day_limit")

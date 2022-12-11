@@ -10,6 +10,7 @@ import io.ktor.http.*
 import kotlinx.serialization.json.*
 import net.mamoe.mirai.event.events.*
 import net.mamoe.mirai.utils.*
+import xyz.cssxsh.mirai.auth.validator.bilibili.*
 import javax.script.*
 import kotlin.io.path.*
 

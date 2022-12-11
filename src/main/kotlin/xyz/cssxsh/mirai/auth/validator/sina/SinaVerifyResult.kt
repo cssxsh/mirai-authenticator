@@ -1,16 +1,17 @@
-package xyz.cssxsh.mirai.auth.validator
+package xyz.cssxsh.mirai.auth.validator.sina
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
+@PublishedApi
 @Serializable
-internal data class BiliBiliResult(
+internal data class SinaVerifyResult(
     @SerialName("code")
     val code: Int = 0,
     @SerialName("data")
     val `data`: JsonElement = JsonNull,
-    @SerialName("message")
+    @SerialName("msg")
     val message: String = "",
-    @SerialName("ttl")
-    val ttl: Int = 0
+    @SerialName("result")
+    val result: Boolean = false
 )

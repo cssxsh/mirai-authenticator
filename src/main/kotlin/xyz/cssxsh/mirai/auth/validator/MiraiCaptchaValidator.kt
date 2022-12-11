@@ -15,6 +15,7 @@ import net.mamoe.mirai.event.events.*
 import net.mamoe.mirai.message.data.*
 import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
 import xyz.cssxsh.mirai.auth.data.*
+import xyz.cssxsh.mirai.auth.validator.sina.*
 
 /**
  * 验证器，验证码实现
