@@ -29,6 +29,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
         }
     }
 
+    @PublishedApi
     @EventHandler(priority = EventPriority.HIGH)
     internal suspend fun MemberJoinRequestEvent.handle() {
         if ((group?.botPermission ?: MemberPermission.MEMBER) < MemberPermission.ADMINISTRATOR) return
@@ -41,6 +42,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
         intercept()
     }
 
+    @PublishedApi
     @EventHandler(priority = EventPriority.HIGH)
     internal suspend fun MemberJoinEvent.handle() {
         if (group.botPermission < MemberPermission.ADMINISTRATOR) return

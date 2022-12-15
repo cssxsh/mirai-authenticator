@@ -43,6 +43,7 @@ public interface MiraiChecker {
             providers[id] = provider
         }
 
+        @PublishedApi
         internal val QA: Regex = """(?:问题|答案)：(.+)""".toRegex()
     }
 }
