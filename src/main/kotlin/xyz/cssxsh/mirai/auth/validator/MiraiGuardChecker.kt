@@ -9,30 +9,25 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.json.*
 import net.mamoe.mirai.event.events.*
-import net.mamoe.mirai.utils.*
 import xyz.cssxsh.mirai.auth.validator.bilibili.*
-import javax.script.*
 import kotlin.io.path.*
 
 /**
  * 校验 b站粉丝牌
  */
 @PublishedApi
-internal class MiraiGuardChecker : MiraiChecker {
-    override val logger: MiraiLogger = MiraiLogger.Factory.create(this::class)
+internal class MiraiGuardChecker : MiraiChecker, AbstractMiraiChecker() {
+    override val folder = Path(System.getProperty("xyz.cssxsh.mirai.auth.validator.bilibili", "bilibili"))
     private val http: HttpClient = HttpClient(OkHttp) {
         BrowserUserAgent()
         ContentEncoding()
     }
 
     override suspend fun check(event: MemberJoinRequestEvent): Boolean {
-        val folder = Path(System.getProperty("xyz.cssxsh.mirai.auth.validator.bilibili", "bilibili"))
         val script = folder.listDirectoryEntries().firstOrNull { it.name.startsWith("${event.groupId}.") }
             ?: throw IllegalStateException("获取 ${event.groupId} Guard 验证脚本失败")
-
-        val manager = ScriptEngineManager(MiraiProfileChecker::class.java.classLoader)
         val engine = manager.getEngineByExtension(script.extension)
-            ?: throw IllegalStateException("获取 ${script.extension} 脚本引擎失败")
+            ?: throw NoSuchElementException("获取 ${script.extension} 脚本引擎失败")
 
         val match = MiraiChecker.QA.find(event.message) ?: return true
         val question = match.groupValues[1]
@@ -47,6 +42,7 @@ internal class MiraiGuardChecker : MiraiChecker {
 
         val bindings = engine.createBindings().apply(event = event)
         bindings["question"] = question
+        bindings["answer"] = answer
         bindings["mid"] = mid
         bindings["medal"] = medal
 

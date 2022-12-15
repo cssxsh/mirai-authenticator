@@ -2,25 +2,20 @@ package xyz.cssxsh.mirai.auth.validator
 
 import net.mamoe.mirai.*
 import net.mamoe.mirai.event.events.*
-import net.mamoe.mirai.utils.*
-import javax.script.*
 import kotlin.io.path.*
 
 /**
  * 校验简介信息
  */
 @PublishedApi
-internal class MiraiProfileChecker : MiraiChecker {
-    override val logger: MiraiLogger = MiraiLogger.Factory.create(this::class)
+internal class MiraiProfileChecker : MiraiChecker, AbstractMiraiChecker() {
+    override val folder = Path(System.getProperty("xyz.cssxsh.mirai.auth.validator.profile", "profile"))
 
     override suspend fun check(event: MemberJoinRequestEvent): Boolean {
-        val folder = Path(System.getProperty("xyz.cssxsh.mirai.auth.validator.profile", "profile"))
         val script = folder.listDirectoryEntries().firstOrNull { it.name.startsWith("${event.groupId}.") }
             ?: throw IllegalStateException("获取 ${event.groupId} Profile 验证脚本失败")
-
-        val manager = ScriptEngineManager(MiraiProfileChecker::class.java.classLoader)
         val engine = manager.getEngineByExtension(script.extension)
-            ?: throw IllegalStateException("获取 ${script.extension} 脚本引擎失败")
+            ?: throw NoSuchElementException("获取 ${script.extension} 脚本引擎失败")
 
         val profile = try {
             Mirai.queryProfile(event.bot, event.fromId)

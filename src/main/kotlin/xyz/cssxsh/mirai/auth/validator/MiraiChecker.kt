@@ -1,14 +1,12 @@
 package xyz.cssxsh.mirai.auth.validator
 
 import net.mamoe.mirai.event.events.*
-import net.mamoe.mirai.utils.*
 import javax.script.*
 
 /**
  * 校验接口
  */
 public interface MiraiChecker {
-    public val logger: MiraiLogger
 
     /**
      * 检查
@@ -18,17 +16,7 @@ public interface MiraiChecker {
     /**
      * 装入基本 Bindings
      */
-    public fun <T: Bindings> T.apply(event: MemberJoinRequestEvent): T = apply {
-        this["bot"] = event.bot
-        this["logger"] = logger
-        this["eventId"] = event.eventId
-        this["fromId"] = event.fromId
-        this["fromNick"] = event.fromNick
-        this["groupId"] = event.groupId
-        this["groupName"] = event.groupName
-        this["message"] = event.message
-        this["invitorId"] = event.invitorId
-    }
+    public fun <T: Bindings> T.apply(event: MemberJoinRequestEvent): T
 
     public companion object {
         @PublishedApi
