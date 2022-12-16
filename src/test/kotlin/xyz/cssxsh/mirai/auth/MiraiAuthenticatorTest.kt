@@ -56,4 +56,17 @@ internal class MiraiAuthenticatorTest {
             """.trimIndent()
         )
     }
+
+    @Test
+    fun afdian(): Unit = runBlocking {
+        MiraiAuthJoinConfig.checkers[123456] = listOf("afdian")
+        group.broadcastNewMemberJoinRequestEvent(
+            requester = 123456789,
+            requesterName = "...",
+            message = """
+                问题：你的爱发电ID
+                答案：730732
+            """.trimIndent()
+        )
+    }
 }

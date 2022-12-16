@@ -83,4 +83,27 @@ internal object MiraiAuthCheckCommand : CompositeCommand(
 
         sendMessage(message = "验证结果: $result")
     }
+
+    @SubCommand
+    @Description("测试 afdian 校验器")
+    suspend fun UserCommandSender.afdian(group: Long, uid: String) {
+        val request = MemberJoinRequestEvent(
+            bot = bot,
+            eventId = Random.Default.nextLong(),
+            message = """
+                问题：请输入你的爱发电 ID
+                答案：$uid
+            """.trimIndent(),
+            fromId = 0,
+            fromNick = "",
+            groupId = group,
+            groupName = "",
+            invitorId = user.id
+        )
+
+        val checker = MiraiSponsorChecker()
+        val result = checker.check(event = request)
+
+        sendMessage(message = "验证结果: $result")
+    }
 }

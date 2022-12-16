@@ -28,6 +28,21 @@ internal object MiraiAuthJoinCommand : CompositeCommand(
                 "profile" -> script.writeText("""return fromProfile:getQLevel() > 4;""")
                 "question" -> script.writeText("""return answer == "114514";""")
                 "bilibili" -> script.writeText("""return medal:getTargetId() == 11153765 and medal:getLevel() >= 20;""")
+                "afdian" -> script.writeText(
+                    """
+                        local list = query:getList();
+                        for index = 1, list:size() do
+                            local sponsor = list:get(index - 1);
+                            local user = sponsor:getUser();
+                            -- print(user);
+                            if user:getUserId() == answer or user:getName() == answer then
+                                return true;
+                            end
+                        end
+
+                        return false;
+                    """.trimIndent()
+                )
             }
             sendMessage("之后，请编辑确认 $script")
         }

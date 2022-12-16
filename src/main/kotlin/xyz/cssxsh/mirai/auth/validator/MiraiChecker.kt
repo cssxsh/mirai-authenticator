@@ -26,6 +26,7 @@ public interface MiraiChecker {
             providers["question"] = ::MiraiQuestionChecker
             providers["profile"] = ::MiraiProfileChecker
             providers["bilibili"] = ::MiraiGuardChecker
+            providers["afdian"] = ::MiraiSponsorChecker
         }
 
         /**
