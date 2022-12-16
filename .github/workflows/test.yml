@@ -3,6 +3,7 @@ on: [ push, pull_request ]
 
 jobs:
   check:
+    environment: AFDIAN
     runs-on: ubuntu-latest
     steps:
 
@@ -26,3 +27,6 @@ jobs:
 
       - name: MiraiAuthenticatorTest
         run: ./gradlew test --tests "xyz.cssxsh.mirai.auth.MiraiAuthenticatorTest" --scan --info
+        env:
+          AFDIAN_USER_ID: ${{ secrets.AFDIAN_USER_ID }}
+          AFDIAN_USER_TOKEN: ${{ secrets.AFDIAN_USER_TOKEN }}
