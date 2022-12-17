@@ -75,7 +75,7 @@ internal class MiraiCaptchaValidator : MiraiValidator {
     }
 
     override suspend fun auth(answer: String): Boolean {
-        return when(verifyCaptcha(code = answer.trim()).code) {
+        return when (verifyCaptcha(code = answer.trim()).code) {
             -102 -> false
             else -> true
         }

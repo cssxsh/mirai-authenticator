@@ -3,7 +3,7 @@ package xyz.cssxsh.mirai.auth.data
 import net.mamoe.mirai.console.data.*
 
 @PublishedApi
-internal object MiraiAuthJoinConfig: AutoSavePluginConfig("join") {
+internal object MiraiAuthJoinConfig : AutoSavePluginConfig("join") {
     @ValueName("timeout")
     @ValueDescription("等待问题提交时间")
     var timeout: Long by value(30_000L)

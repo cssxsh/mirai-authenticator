@@ -16,7 +16,7 @@ public abstract class AbstractMiraiChecker : MiraiChecker {
     /**
      * 装入基本 Bindings
      */
-    public override fun <T: Bindings> T.apply(event: MemberJoinRequestEvent): T = apply {
+    public override fun <T : Bindings> T.apply(event: MemberJoinRequestEvent): T = apply {
         this["bot"] = event.bot
         this["logger"] = logger
         this["eventId"] = event.eventId

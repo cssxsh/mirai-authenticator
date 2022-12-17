@@ -24,7 +24,7 @@
 
 ### auth-join
 
-配置验证条件, 目前 check 中 可选的 type 有 `profile`, `question`, `bilibili`  
+配置验证条件, 目前 check 中 可选的 type 有 `profile`, `question`, `bilibili`, `afdian`  
 配置验证条件, 目前 validator 中 可选的 type 有 `captcha`
 
 *   `/auth-join check [group] {types}` 进群前检查  
@@ -56,7 +56,7 @@
 
 ### auth-check
 
-测试验证码功能
+测试进群前检查功能
 
 *   `/auth-check question [group] [question] [answer]` 测试群的 question 验证脚本  
     `group` 是群号, `question` 是问题, `answer` 是答案  
@@ -69,6 +69,10 @@
 *   `/auth-check bilibili [group] [uid]` 测试群的 bilibili 验证脚本  
     `group` 是群号, `uid` 是入群提交的 uid  
     例如: `/auth-check bilibili 123456 789566`
+
+*   `/auth-check afdian [group] [uid]` 测试群的 afdian 验证脚本  
+    `group` 是群号, `uid` 是入群提交的 uid  
+    例如: `/auth-check afdian 123456 dousha99`
 
 #### 效果
 
@@ -126,7 +130,7 @@ return answer == "114514" or answer == "......";
 
 ### BiliBili 校验脚本
 
-`BiliBili` 校验脚本主要用于校验用户提交的 `UID` 当前配置的粉丝牌详情      
+`BiliBili` 校验脚本主要用于校验用户提交的 `UID` 当前配置的粉丝牌详情  
 对于 `BiliBili` 校验脚本, 将支持
 
 *   `medal` 粉丝牌详情
@@ -139,6 +143,27 @@ return answer == "114514" or answer == "......";
 ```lua
 return medal:getTargetId() == 11153765 and medal:getLevel() >= 20;
 ```
+
+### AFDian 校验脚本
+
+`AFDian` 校验脚本主要用于校验用户提交的 `UID` 是否在捐助者列表中  
+对于 `AFDian` 校验脚本, 将支持
+
+*   `query` 查询结果
+    *   `getList` 获取捐助者列表
+        *   `getUser` 获取捐助者信息
+            *   `getUserId` 获取捐助者 ID
+            *   `getName` 获取捐助者 NAME
+        *   `getCurrentPlan` 获取当前捐助计划
+            *   `getName` 获取捐助计划 Name
+            *   `getStatus` 获取捐助状态
+            *   `getPrice` 获取捐助价格
+            *   ...
+        *   `getFirstPayTime` 第一次支付时间
+        *   `getLastPayTime` 最后一次支付时间
+        *   `getAllSumAmount` 总计金额
+    *   `getCount` 获取总数量
+    *   `getPage` 获取当前查询数量
 
 ## [爱发电](https://afdian.net/@cssxsh)
 

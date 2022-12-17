@@ -16,7 +16,7 @@ public interface MiraiChecker {
     /**
      * 装入基本 Bindings
      */
-    public fun <T: Bindings> T.apply(event: MemberJoinRequestEvent): T
+    public fun <T : Bindings> T.apply(event: MemberJoinRequestEvent): T
 
     public companion object {
         @PublishedApi
