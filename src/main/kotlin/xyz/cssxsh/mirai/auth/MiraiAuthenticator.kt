@@ -62,7 +62,7 @@ public object MiraiAuthenticator : SimpleListenerHost() {
                 val validator = try {
                     MiraiChecker(id)
                 } catch (cause: Exception) {
-                    logger.warning({ "$name 获取验证器 $id 失败" }, cause)
+                    logger.warning({ "$name 获取校验器 $id 失败" }, cause)
                     continue
                 }
                 yield(validator)
