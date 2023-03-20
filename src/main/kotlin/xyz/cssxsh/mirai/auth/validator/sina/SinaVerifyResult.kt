@@ -6,6 +6,8 @@ import kotlinx.serialization.json.*
 @PublishedApi
 @Serializable
 internal data class SinaVerifyResult(
+    @SerialName("errno")
+    val errno: Int = 0,
     @SerialName("code")
     val code: Int = 0,
     @SerialName("data")
