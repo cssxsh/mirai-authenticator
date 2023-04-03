@@ -37,7 +37,7 @@
     例如: `/auth-join official 123456789`
 
 *   `/auth-join timeout [mills]` 问题回答等待时间  
-    例如: `/auth-join mills 180000`
+    例如: `/auth-join timeout 180000`
 
 *   `/auth-join count [value]` 问题允许回答次数  
     例如: `/auth-join count 5`
