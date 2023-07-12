@@ -11,6 +11,8 @@ internal data class AFDianSponsorPlan(
     val bundleStock: Int = 0,
     @SerialName("can_buy_hide")
     val canBuyHide: Int = 0,
+    @SerialName("can_ali_agreement")
+    val canAliAgreement: Int = 0,
     @SerialName("config")
     val config: Config = Config(),
     @SerialName("coupon")

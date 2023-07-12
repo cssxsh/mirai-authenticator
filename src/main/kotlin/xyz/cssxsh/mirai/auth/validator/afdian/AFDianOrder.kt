@@ -7,6 +7,8 @@ import kotlinx.serialization.*
 internal data class AFDianOrder(
     @SerialName("address_address")
     val address: String = "",
+    @SerialName("create_time")
+    val createTime: Long = 0,
     @SerialName("address_person")
     val person: String = "",
     @SerialName("address_phone")

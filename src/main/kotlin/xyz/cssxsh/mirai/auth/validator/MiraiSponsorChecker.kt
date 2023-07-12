@@ -60,7 +60,7 @@ internal class MiraiSponsorChecker : MiraiChecker, AbstractMiraiChecker() {
                 }
                 if (result) return@supervisorScope true
 
-                if (total >= query.count || query.list.isEmpty()) break
+                if (total++ >= query.count || query.list.isEmpty()) break
             }
 
             false
