@@ -8,6 +8,7 @@ import io.ktor.client.plugins.compression.*
 import io.ktor.client.plugins.cookies.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.utils.io.charsets.*
 import kotlinx.serialization.json.*
@@ -35,13 +36,18 @@ internal class MiraiCaptchaValidator : MiraiValidator {
 
     @PublishedApi
     internal suspend fun getCaptchaImage(): ByteArray {
+        val html = http.get("https://mail.sina.com.cn/register/regmail.php").bodyAsText()
+        val id = """(?<=accessid=).{42}""".toRegex().find(html)?.value
+            ?: throw IllegalStateException("Not Found Access Id")
         val statement = http.prepareGet("https://mail.sina.com.cn/cgi-bin/imgcode.php") {
+            parameter("t", 1)
+            parameter("accessid", id)
             header(HttpHeaders.Referrer, "https://mail.sina.com.cn/register/regmail.php")
             header(HttpHeaders.Origin, "https://mail.sina.com.cn")
         }
         return statement.execute { response ->
             if (response.contentType() != ContentType.Image.JPEG) {
-                throw ResponseException(response, "")
+                throw ResponseException(response, response.bodyAsText())
             }
             response.body()
         }
