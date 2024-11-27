@@ -97,7 +97,7 @@ internal class MiraiSponsorChecker : MiraiChecker, AbstractMiraiChecker() {
 
     @PublishedApi
     internal suspend fun ping(uid: String, token: String): JsonObject {
-        val statement = http.preparePost("https://afdian.net/api/open/ping") {
+        val statement = http.preparePost("https://afdian.com/api/open/ping") {
             body(uid, token) {
                 put("page", Random.Default.nextInt())
             }
@@ -111,7 +111,7 @@ internal class MiraiSponsorChecker : MiraiChecker, AbstractMiraiChecker() {
 
     @PublishedApi
     internal suspend fun order(uid: String, token: String, page: Int): AFDianQuery<AFDianOrder> {
-        val statement = http.preparePost("https://afdian.net/api/open/query-order") {
+        val statement = http.preparePost("https://afdian.com/api/open/query-order") {
             body(uid, token) {
                 put("page", page)
             }
@@ -125,7 +125,7 @@ internal class MiraiSponsorChecker : MiraiChecker, AbstractMiraiChecker() {
 
     @PublishedApi
     internal suspend fun sponsor(uid: String, token: String, page: Int): AFDianQuery<AFDianSponsor> {
-        val statement = http.preparePost("https://afdian.net/api/open/query-sponsor") {
+        val statement = http.preparePost("https://afdian.com/api/open/query-sponsor") {
             body(uid, token) {
                 put("page", page)
             }

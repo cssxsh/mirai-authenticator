@@ -53,6 +53,8 @@ internal data class AFDianSponsorPlan(
     val rankType: Int = 0,
     @SerialName("sale_limit_count")
     val saleLimitCount: Int = 0,
+    @SerialName("shipping_fee_info")
+    val shippingFeeInfo: JsonElement = JsonNull,
     @SerialName("show_price")
     val showPrice: String = "",
     @SerialName("show_price_after_adjust")
@@ -102,6 +104,8 @@ internal data class AFDianSponsorPlan(
         val picture: String = "",
         @SerialName("post_id")
         val postId: String = "",
+        @SerialName("price")
+        val price: Double = 0.0,
         @SerialName("sku_id")
         val skuId: String = "",
         @SerialName("stock")
@@ -113,6 +117,10 @@ internal data class AFDianSponsorPlan(
         @SerialName("timing_off")
         val timingOff: Int = 0,
         @SerialName("timing_on")
-        val timingOn: Int = 0
+        val timingOn: Int = 0,
+        @SerialName("timing_sell_off")
+        val timingSellOff: Int = 0,
+        @SerialName("timing_sell_on")
+        val timingSellOn: Int = 0
     )
 }
