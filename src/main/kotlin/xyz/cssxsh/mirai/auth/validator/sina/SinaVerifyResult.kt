@@ -11,7 +11,7 @@ internal data class SinaVerifyResult(
     @SerialName("code")
     val code: Int = 0,
     @SerialName("data")
-    val `data`: JsonElement = JsonNull,
+    val data: JsonElement = JsonNull,
     @SerialName("msg")
     val message: String = "",
     @SerialName("result")

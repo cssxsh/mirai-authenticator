@@ -22,14 +22,13 @@ internal object MiraiAuthCaptchaCommand : SimpleCommand(
             subject.uploadImage(resource)
         }
         sendMessage(message = image + MiraiAuthJoinConfig.tip)
-        val next = subject.bot.eventChannel.nextEvent<MessageEvent>(priority = EventPriority.HIGH, intercept = true) {
-            it.sender == user
-        }
+        val next = subject.bot.eventChannel
+            .nextEvent<MessageEvent>(priority = EventPriority.HIGH, intercept = true) { it.sender == user }
 
         val answer = next.message.contentToString()
 
         val result = validator.verifyCaptcha(code = answer)
 
-        sendMessage(message = "验证结果: ${result.code != -102}")
+        sendMessage(message = "验证结果: ${result.code != -102} (${result.code})")
     }
 }

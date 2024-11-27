@@ -24,6 +24,8 @@ internal data class BiliBiliUserInfo(
     val fansBadge: Boolean = false,
     @SerialName("fans_medal")
     val fansMedal: JsonElement = JsonNull,
+    @SerialName("ga_data")
+    val gaData: JsonElement = JsonNull,
     @SerialName("gaia_data")
     val gaiaData: JsonElement = JsonNull,
     @SerialName("gaia_res_type")

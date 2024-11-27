@@ -152,6 +152,8 @@ public object MiraiAuthenticator : SimpleListenerHost() {
 
                 val content = response.message.contentToString()
 
+                logger.info("summit answer <${content}>")
+
                 val result = try {
                     validator.auth(answer = content)
                 } catch (cause: IllegalStateException) {
